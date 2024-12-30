@@ -27,8 +27,8 @@ function Check-Services {
 
 # Function to check Activity History setting
 function Check-ActivityHistory {
-    $regPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\ActivityHistory"
-    $valueName = "DisableActivityHistory"
+    $regPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Privacy"
+    $valueName = "ActivityHistoryEnabled"
 
     Write-Output "`nChecking Activity History setting..."
     if (Test-Path $regPath) {
@@ -36,14 +36,14 @@ function Check-ActivityHistory {
 
         if ($regValue) {
             if ($regValue.$valueName -eq 1) {
-                Write-Output "Activity History is disabled."
-            } elseif ($regValue.$valueName -eq 0) {
                 Write-Output "Activity History is enabled."
+            } elseif ($regValue.$valueName -eq 0) {
+                Write-Output "Activity History is disabled."
             } else {
                 Write-Output "Activity History setting is undefined."
             }
         } else {
-            Write-Output "DisableActivityHistory key is not set. Activity History might use the default behavior."
+            Write-Output "$valueName key is not set. Activity History might use the default behavior."
         }
     } else {
         Write-Output "Registry path for Activity History does not exist. Activity History might not be configured."
