@@ -1,4 +1,3 @@
-# Function to check required services
 function Check-Services {
     $servicesToCheck = @(
         "SysMain",          # System performance monitoring
@@ -25,7 +24,6 @@ function Check-Services {
     }
 }
 
-# Function to check Activity History setting
 function Check-ActivityHistory {
     $regPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Privacy"
     $valueName = "ActivityHistoryEnabled"
@@ -50,7 +48,6 @@ function Check-ActivityHistory {
     }
 }
 
-# Function to check Jump Lists setting
 function Check-JumpLists {
     $regPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
     $valueName = "Start_TrackDocs"
@@ -75,10 +72,9 @@ function Check-JumpLists {
     }
 }
 
-# Function to check if any drives/USBs are FAT32
 function Check-FAT32-Drives {
     Write-Output "`nChecking connected drives for FAT32 format..."
-    $drives = Get-WmiObject Win32_LogicalDisk | Where-Object { $_.DriveType -eq 2 -or $_.DriveType -eq 3 } # Removable and Fixed drives
+    $drives = Get-WmiObject Win32_LogicalDisk | Where-Object { $_.DriveType -eq 2 -or $_.DriveType -eq 3 } 
 
     foreach ($drive in $drives) {
         if ($drive.FileSystem -eq "FAT32") {
@@ -89,7 +85,6 @@ function Check-FAT32-Drives {
     }
 }
 
-# Main script execution
 Write-Output "Starting system checks...`n"
 Check-Services
 Check-ActivityHistory
